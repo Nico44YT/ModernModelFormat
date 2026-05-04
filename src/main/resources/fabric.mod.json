@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "modernmodelformat",
+  "version": "${version}",
+  "name": "ModernModelFormat",
+  "description": "Allows loading of 1.21.11 models in newer versions",
+  "authors": [
+    "Nico_44"
+  ],
+  "contact": {},
+  "license": "GPL-3.0",
+  "icon": "assets/modernmodelformat/icon.png",
+  "environment": "*",
+  "accessWidener": "modernmodelformat.accesswidener",
+  "entrypoints": {
+    "client": [
+      "nico.modernmodelformat.ModernModelFormat"
+    ]
+  },
+  "mixins": [
+    "modernmodelformat.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": "*",
+    "fabric-api": "*",
+    "minecraft": "*"
+  },
+  "custom": {
+    "loom:injected_interfaces": {
+      "net/minecraft/class_789": [
+        "nico/modernmodelformat/format/ModernRotationWrapper"
+      ]
+    }
+  }
+}
