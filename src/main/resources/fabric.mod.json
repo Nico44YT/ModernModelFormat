@@ -7,10 +7,13 @@
   "authors": [
     "Nico_44"
   ],
-  "contact": {},
+  "contact": {
+    "issues": "https://github.com/Nico44YT/ModernModelFormat/issues",
+    "sources": "https://github.com/Nico44YT/ModernModelFormat"
+  },
   "license": "GPL-3.0",
   "icon": "assets/modernmodelformat/icon.png",
-  "environment": "*",
+  "environment": "client",
   "accessWidener": "modernmodelformat.accesswidener",
   "entrypoints": {
     "client": [
