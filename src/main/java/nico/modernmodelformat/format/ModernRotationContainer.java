@@ -3,32 +3,36 @@ package nico.modernmodelformat.format;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.util.math.AffineTransformation;
-import org.joml.Quaternionf;
-import org.joml.Vector3f;
+import net.minecraft.util.math.Quaternion;
+import net.minecraft.util.math.Vec3f;
 
 public class ModernRotationContainer {
     private final AffineTransformation affineTransformation;
-    private final Vector3f origin;
-    private final Vector3f rotation;
+    private final Vec3f origin;
 
-    public ModernRotationContainer(float x, float y, float z, Vector3f origin) {
-        Quaternionf quaternionf = (new Quaternionf()).rotateYXZ((float) Math.toRadians(-y), (float) Math.toRadians(-x), (float) Math.toRadians(-z));
+    public ModernRotationContainer(float x, float y, float z, Vec3f origin) {
+        Quaternion quaternion = Quaternion.IDENTITY.copy();
+        quaternion.hamiltonProduct(Vec3f.POSITIVE_Y.getRadialQuaternion((float)Math.toRadians(-y)));
+        quaternion.hamiltonProduct(Vec3f.POSITIVE_X.getRadialQuaternion((float)Math.toRadians(-x)));
+        quaternion.hamiltonProduct(Vec3f.POSITIVE_Z.getRadialQuaternion((float)Math.toRadians(-z)));
 
-        this.rotation = new Vector3f(x, y, z);
         this.affineTransformation = new AffineTransformation(
-                new Vector3f(), // Translation
-                quaternionf, // Left-Rotation
-                new Vector3f(1, 1, 1), // Scale
-                new Quaternionf() // Right-Rotation
+                Vec3f.ZERO, // Translation
+                quaternion, // Left-Rotation
+                new Vec3f(1, 1, 1), // Scale
+                Quaternion.IDENTITY // Right-Rotation
         );
-        this.origin = origin.mul(1 / 16f); // Idk why I need to scale it
+
+        Vec3f scaledOrigin = origin.copy();
+        scaledOrigin.scale(1/16f);
+        this.origin = scaledOrigin;
     }
 
     public static ModernRotationContainer fromJson(JsonObject elementJson) {
-        if (!elementJson.has("rotation")) return new ModernRotationContainer(0, 0, 0, new Vector3f());
+        if (!elementJson.has("rotation")) return new ModernRotationContainer(0, 0, 0, new Vec3f());
 
         JsonObject rotationObject = elementJson.get("rotation").getAsJsonObject();
-        Vector3f origin = rotationObject.has("origin") ? getOriginFromJson(rotationObject.get("origin").getAsJsonArray()) : new Vector3f();
+        Vec3f origin = rotationObject.has("origin") ? getOriginFromJson(rotationObject.get("origin").getAsJsonArray()) : new Vec3f();
 
         if (rotationObject.has("angle")) {
             float rotation = rotationObject.get("angle").getAsFloat();
@@ -53,24 +57,20 @@ public class ModernRotationContainer {
         return new ModernRotationContainer(x, y, z, origin);
     }
 
-    private static Vector3f getOriginFromJson(JsonArray originArray) {
-        return new Vector3f(originArray.get(0).getAsFloat(), originArray.get(1).getAsFloat(), originArray.get(2).getAsFloat());
+    private static Vec3f getOriginFromJson(JsonArray originArray) {
+        return new Vec3f(originArray.get(0).getAsFloat(), originArray.get(1).getAsFloat(), originArray.get(2).getAsFloat());
     }
 
     public AffineTransformation getAffineTransformation() {
         return this.affineTransformation;
     }
 
-    public Vector3f getOrigin() {
+    public Vec3f getOrigin() {
         return this.origin;
-    }
-
-    public Vector3f getRotation() {
-        return this.rotation;
     }
 
     @Override
     public String toString() {
-        return String.format("[%s, %s, %s]", this.affineTransformation, this.rotation, this.origin);
+        return String.format("[%s]", this.affineTransformation);
     }
 }
