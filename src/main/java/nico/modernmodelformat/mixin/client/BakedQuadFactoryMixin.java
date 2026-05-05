@@ -2,12 +2,10 @@ package nico.modernmodelformat.mixin.client;
 
 import net.minecraft.client.render.model.BakedQuadFactory;
 import net.minecraft.client.render.model.json.ModelRotation;
-import net.minecraft.util.math.AffineTransformation;
 import nico.modernmodelformat.format.ModernRotationContainer;
 import org.joml.Matrix4f;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
-import org.spongepowered.asm.mixin.Interface;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -28,9 +26,9 @@ public abstract class BakedQuadFactoryMixin {
             Vector3f rotationVector = rotationContainer.getRotation();
             Vector3f origin = rotationContainer.getOrigin();
 
-            float xRad = (float)Math.toRadians(rotationVector.x());
-            float yRad = (float)Math.toRadians(rotationVector.y());
-            float zRad = (float)Math.toRadians(rotationVector.z());
+            float xRad = (float) Math.toRadians(rotationVector.x());
+            float yRad = (float) Math.toRadians(rotationVector.y());
+            float zRad = (float) Math.toRadians(rotationVector.z());
 
             Quaternionf quaternion = new Quaternionf().rotateYXZ(yRad, xRad, zRad);
 

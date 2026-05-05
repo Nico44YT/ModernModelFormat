@@ -12,7 +12,7 @@ public class ModernRotationContainer {
     private final Vector3f rotation;
 
     public ModernRotationContainer(float x, float y, float z, Vector3f origin) {
-        Quaternionf quaternionf = (new Quaternionf()).rotateYXZ((float)Math.toRadians(-y), (float)Math.toRadians(-x), (float)Math.toRadians(-z));
+        Quaternionf quaternionf = (new Quaternionf()).rotateYXZ((float) Math.toRadians(-y), (float) Math.toRadians(-x), (float) Math.toRadians(-z));
 
         this.rotation = new Vector3f(x, y, z);
         this.affineTransformation = new AffineTransformation(
@@ -21,16 +21,16 @@ public class ModernRotationContainer {
                 new Vector3f(1, 1, 1), // Scale
                 new Quaternionf() // Right-Rotation
         );
-        this.origin = origin.mul(1/16f); // Idk why I need to scale it
+        this.origin = origin.mul(1 / 16f); // Idk why I need to scale it
     }
 
     public static ModernRotationContainer fromJson(JsonObject elementJson) {
-        if(!elementJson.has("rotation")) return new ModernRotationContainer(0, 0, 0, new Vector3f());
+        if (!elementJson.has("rotation")) return new ModernRotationContainer(0, 0, 0, new Vector3f());
 
         JsonObject rotationObject = elementJson.get("rotation").getAsJsonObject();
         Vector3f origin = rotationObject.has("origin") ? getOriginFromJson(rotationObject.get("origin").getAsJsonArray()) : new Vector3f();
 
-        if(rotationObject.has("angle")) {
+        if (rotationObject.has("angle")) {
             float rotation = rotationObject.get("angle").getAsFloat();
             char axis = rotationObject.get("axis").getAsString().toLowerCase().charAt(0);
 
