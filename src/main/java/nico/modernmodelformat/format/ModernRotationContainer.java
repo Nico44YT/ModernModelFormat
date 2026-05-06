@@ -9,12 +9,10 @@ import org.joml.Vector3f;
 public class ModernRotationContainer {
     private final AffineTransformation affineTransformation;
     private final Vector3f origin;
-    private final Vector3f rotation;
 
     public ModernRotationContainer(float x, float y, float z, Vector3f origin) {
         Quaternionf quaternionf = (new Quaternionf()).rotateYXZ((float) Math.toRadians(-y), (float) Math.toRadians(-x), (float) Math.toRadians(-z));
 
-        this.rotation = new Vector3f(x, y, z);
         this.affineTransformation = new AffineTransformation(
                 new Vector3f(), // Translation
                 quaternionf, // Left-Rotation
@@ -65,12 +63,8 @@ public class ModernRotationContainer {
         return this.origin;
     }
 
-    public Vector3f getRotation() {
-        return this.rotation;
-    }
-
     @Override
     public String toString() {
-        return String.format("[%s, %s, %s]", this.affineTransformation, this.rotation, this.origin);
+        return String.format("[%s, %s]", this.affineTransformation, this.origin);
     }
 }
