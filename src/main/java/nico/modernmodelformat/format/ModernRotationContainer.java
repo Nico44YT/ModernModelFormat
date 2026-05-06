@@ -71,6 +71,6 @@ public class ModernRotationContainer {
 
     @Override
     public String toString() {
-        return String.format("[%s]", this.affineTransformation);
+        return String.format("[%s, %s]", this.affineTransformation, this.origin);
     }
 }

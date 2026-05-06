@@ -14,6 +14,7 @@ public abstract class ModelElementDeserializerMixin {
     @WrapOperation(method = "deserialize(Lcom/google/gson/JsonElement;Ljava/lang/reflect/Type;Lcom/google/gson/JsonDeserializationContext;)Lnet/minecraft/client/render/model/json/ModelElement;", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/model/json/ModelElement$Deserializer;deserializeRotation(Lcom/google/gson/JsonObject;)Lnet/minecraft/client/render/model/json/ModelRotation;"))
     public ModelRotation modernModelFormat$deserializeRotation(ModelElement.Deserializer instance, JsonObject object, Operation<ModelRotation> original) {
         if (instance instanceof ModernModelElementDeserializer modernDeserializer) {
+            System.out.println("Deserializing rotation: " + object);
             return modernDeserializer.deserializeModelRotation(object);
         }
 
