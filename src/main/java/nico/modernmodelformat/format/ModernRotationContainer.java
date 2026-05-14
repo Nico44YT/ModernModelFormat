@@ -9,9 +9,12 @@ import org.joml.Vector3f;
 public class ModernRotationContainer {
     private final AffineTransformation affineTransformation;
     private final Vector3f origin;
+    private final Vector3f rotation;
 
     public ModernRotationContainer(float x, float y, float z, Vector3f origin) {
         Quaternionf quaternionf = (new Quaternionf()).rotateYXZ((float) Math.toRadians(y), (float) Math.toRadians(x), (float) Math.toRadians(z));
+
+        this.rotation = new Vector3f(x, y, z);
 
         this.affineTransformation = new AffineTransformation(
                 new Vector3f(), // Translation
@@ -61,6 +64,10 @@ public class ModernRotationContainer {
 
     public Vector3f getOrigin() {
         return this.origin;
+    }
+
+    public Vector3f getRotation() {
+        return this.rotation;
     }
 
     @Override

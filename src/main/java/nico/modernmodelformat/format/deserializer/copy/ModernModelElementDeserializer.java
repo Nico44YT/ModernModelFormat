@@ -14,4 +14,6 @@ public class ModernModelElementDeserializer extends ModelElement.Deserializer {
         return new ModelRotation(new Vector3f(), Direction.Axis.X, 0, JsonHelper.getBoolean(object, "rescale", false))
                 .modernRotationFormat$setModernRotation(rotationContainer);
     }
+
+
 }
