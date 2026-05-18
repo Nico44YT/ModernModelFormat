@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import net.minecraft.client.render.model.json.JsonUnbakedModel;
 import net.minecraft.client.render.model.json.ModelElement;
 import net.minecraft.util.JsonHelper;
-import nico.modernmodelformat.format.deserializer.copy.ModernModelElementDeserializer;
 import nico.modernmodelformat.mixin.client.accessor.JsonUnbakedModelAccessor;
 
 import java.io.Reader;

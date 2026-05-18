@@ -1,4 +1,4 @@
-package nico.modernmodelformat.format.deserializer.copy;
+package nico.modernmodelformat.format.deserializer;
 
 import com.google.gson.JsonObject;
 import net.minecraft.client.render.model.json.ModelElement;
@@ -14,6 +14,4 @@ public class ModernModelElementDeserializer extends ModelElement.Deserializer {
         return new ModelRotation(new Vector3f(), Direction.Axis.X, 0, JsonHelper.getBoolean(object, "rescale", false))
                 .modernRotationFormat$setModernRotation(rotationContainer);
     }
-
-
 }

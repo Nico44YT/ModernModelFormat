@@ -2,6 +2,7 @@ package nico.modernmodelformat.mixin.client;
 
 import net.minecraft.client.render.model.BakedQuadFactory;
 import net.minecraft.client.render.model.json.ModelRotation;
+import net.minecraft.util.math.MathHelper;
 import nico.modernmodelformat.format.ModernRotationContainer;
 import org.joml.Matrix4f;
 import org.joml.Quaternionf;
@@ -25,15 +26,32 @@ public abstract class BakedQuadFactoryMixin {
 
             Vector3f origin = rotationContainer.getOrigin();
 
-            Vector3f rot = new Vector3f(rotationContainer.getRotation()).mul(0.017453292F);
+            Vector3f degrees = rotationContainer.getRotation();
+            Vector3f radians = new Vector3f(degrees).mul(MathHelper.DEGREES_PER_RADIAN);
 
-            Quaternionf quaternionf = new Quaternionf().rotateZYX(rot.z, rot.y, rot.x);
+            boolean rescale = rotationContainer.doRescale();
 
-            Vector3f scale = new Vector3f(1, 1, 1); // No scaling
+            Quaternionf quaternionf = new Quaternionf().rotateZYX(radians.z, radians.y, radians.x);
+
+            Vector3f scale = new Vector3f(1, 1, 1);
+
+            if (rescale) {
+                float sx = rescaleFactor(degrees.x);
+                float sy = rescaleFactor(degrees.y);
+                float sz = rescaleFactor(degrees.z);
+
+                scale.set(sy * sz, sx * sz, sx * sy);
+            }
+
             this.transformVertex(vertex, origin, (new Matrix4f()).rotation(quaternionf), scale);
 
             ci.cancel();
         }
+    }
+
+    private float rescaleFactor(float degrees) {
+        float clamped = Math.abs(degrees) % 90.0f;
+        return 1.0f / (float) Math.cos(clamped * MathHelper.DEGREES_PER_RADIAN);
     }
 }
 
