@@ -31,8 +31,9 @@ public abstract class JsonUnbakedModelMixin {
         String content = bufferedReader.lines().collect(Collectors.joining());
 
         JsonObject jsonObject = GSON.fromJson(content, JsonObject.class);
+        String format = JsonHelper.getString(jsonObject, "format_version", "none");
 
-        boolean matchesFormat = JsonHelper.getString(jsonObject, "format_version", "none").equals("1.21.11");
+        boolean matchesFormat = format.equals("1.21.11") || format.equals("1.21.6");
 
         return original.call(matchesFormat ? ModernJsonUnbakedModelDeserializer.GSON : GSON, new StringReader(content), type);
     }
