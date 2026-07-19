@@ -1,3 +1,5 @@
+[![](https://jitpack.io/v/Nico44YT/ModernModelFormat.svg)](https://jitpack.io/#Nico44YT/ModernModelFormat)
+
 Allows the use of the `1.21.11` model format in older versions with the help of black magic, specifically allowing all three axis (XYZ) rotation and incrementes larger/smaller than 22.5°
 
 ### Issues
